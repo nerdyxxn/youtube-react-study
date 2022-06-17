@@ -26,6 +26,9 @@ function VideoUploadPage() {
   const [Description, setDescription] = useState('');
   const [Private, setPrivate] = useState(0);
   const [Category, setCategory] = useState('Film  & Animation');
+  const [FilePath, setFilePath] = useState('');
+  const [Duration, setDuration] = useState('');
+  const [Thumbnail, setThumbnail] = useState('');
 
   // onChange func 생성
   const onTitleChange = (e) => {
@@ -68,6 +71,24 @@ function VideoUploadPage() {
       if (response.data.success) {
         // 비디오 데이터 전송 성공 시
         console.log(response.data);
+
+        let variable = {
+          filePath: response.data.filePath,
+          fileName: response.data.fileName,
+        };
+
+        setFilePath(response.data.filePath);
+
+        axios.post('/api/video/thumbnail', variable).then((response) => {
+          if (response.data.success) {
+            // 비디오 썸네일 생성 성공 시
+            console.log(response.data);
+            setDuration(response.data.fileDuration);
+            setThumbnail(response.data.url);
+          } else {
+            alert('썸네일 생성에 실패했습니다!');
+          }
+        });
       } else {
         alert('비디오 업로드를 실패했습니다!');
       }
@@ -82,12 +103,7 @@ function VideoUploadPage() {
       <Form>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {/* Drop zone */}
-          <Dropzone
-            accept="video/mp4"
-            onDrop={onDrop}
-            multiple={false}
-            maxSize={1000000000}
-          >
+          <Dropzone onDrop={onDrop} multiple={false} maxSize={1000000000}>
             {({ getRootProps, getInputProps }) => (
               <div
                 style={{
@@ -107,9 +123,11 @@ function VideoUploadPage() {
           </Dropzone>
 
           {/* Thumbnail */}
-          <div>
-            <img src alt="" />
-          </div>
+          {Thumbnail !== '' && (
+            <div>
+              <img src={`http://localhost:5000/${Thumbnail}`} alt="haha" />
+            </div>
+          )}
         </div>
         <br />
         <br />
