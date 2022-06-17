@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Button, Form, message, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -26,7 +27,7 @@ function VideoUploadPage() {
   const [Private, setPrivate] = useState(0);
   const [Category, setCategory] = useState('Film  & Animation');
 
-  // onChange 함수 생성
+  // onChange func 생성
   const onTitleChange = (e) => {
     const {
       target: { value },
@@ -55,6 +56,24 @@ function VideoUploadPage() {
     setCategory(value);
   };
 
+  // onDrop func 생성
+  const onDrop = (files) => {
+    let formData = new FormData();
+    const config = {
+      header: { 'content-type': 'multipart/form-data' },
+    };
+    formData.append('file', files[0]);
+
+    axios.post('/api/video/uploadfiles', formData, config).then((response) => {
+      if (response.data.success) {
+        // 비디오 데이터 전송 성공 시
+        console.log(response.data);
+      } else {
+        alert('비디오 업로드를 실패했습니다!');
+      }
+    });
+  };
+
   return (
     <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -64,9 +83,10 @@ function VideoUploadPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {/* Drop zone */}
           <Dropzone
-            onDrop={(acceptedFiles) => console.log(acceptedFiles)}
-            multiple
-            maxSize
+            accept="video/mp4"
+            onDrop={onDrop}
+            multiple={false}
+            maxSize={1000000000}
           >
             {({ getRootProps, getInputProps }) => (
               <div
