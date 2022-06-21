@@ -72,6 +72,17 @@ router.get('/getVideos', (req, res) => {
     });
 });
 
+router.get('/getVideoDetail', (req, res) => {
+  // videoId를 이용해서 일치하는 하나의 비디오 데이터 가져오기
+  // 클라이언트에서 요청한 videoId = req.body.postId
+  Video.findOne({ _id: req.body.postId })
+    .populate('writer')
+    .exec((err, videoDetail) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videoDetail });
+    });
+});
+
 router.post('/thumbnail', (req, res) => {
   let filePath = '';
   let fileDuration = '';
