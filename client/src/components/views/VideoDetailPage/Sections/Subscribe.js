@@ -1,6 +1,21 @@
-import React from 'react';
+import Axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-function Subscribe() {
+function Subscribe(props) {
+  const [SubscribeNumber, SetSubscribeNumber] = useState(0);
+
+  useEffect(() => {
+    let variable = { userTo: props.userTo };
+    Axios.post('/api/subscribe/subscribeNumber', variable).then((response) => {
+      if (response.data.success) {
+        SetSubscribeNumber(response.data.subscribeNumber);
+        console.log(SubscribeNumber);
+      } else {
+        alert('구독자 수 정보 받아오기 실패!');
+      }
+    });
+  }, []);
+
   return (
     <div>
       <button

@@ -30,7 +30,9 @@ function VideoDetailPage() {
               src={`http://localhost:5000/${VideoDetail.filePath}`}
               controls
             />
-            <List.Item actions={[<Subscribe />]}>
+            <List.Item
+              actions={[<Subscribe userTo={VideoDetail.writer._id} />]}
+            >
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.writer.name}
