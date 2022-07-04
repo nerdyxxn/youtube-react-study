@@ -3,6 +3,7 @@ import { Comment, Avatar, Button, Input } from 'antd';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
+import LikeDislikes from './LikeDislikes';
 
 function SingleComment({ comment, refreshFunction }) {
   const { videoId } = useParams();
@@ -15,6 +16,10 @@ function SingleComment({ comment, refreshFunction }) {
   };
 
   const actions = [
+    <LikeDislikes
+      userId={localStorage.getItem('userId')}
+      commentId={comment._id}
+    />,
     <span onClick={onClickReplyOpen} key="comment-basic-reply-to">
       Reply to
     </span>,
