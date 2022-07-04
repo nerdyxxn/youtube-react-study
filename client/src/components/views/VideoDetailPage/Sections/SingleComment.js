@@ -42,6 +42,8 @@ function SingleComment({ comment, refreshFunction }) {
     Axios.post('/api/comment/saveComment', variables).then((response) => {
       if (response.data.success) {
         console.log(response.data.result);
+        setCommentValue('');
+        setOpenReply(false);
         refreshFunction(response.data.result);
       } else {
         alert('댓글 저장 실패!');

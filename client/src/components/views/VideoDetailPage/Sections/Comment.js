@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Axios from 'axios';
 import SingleComment from './SingleComment';
+import ReplyComment from './ReplyComment';
 
 function Comment({ commentList, refreshFunction }) {
   const { videoId } = useParams();
@@ -48,11 +49,18 @@ function Comment({ commentList, refreshFunction }) {
         commentList.map(
           (comment, i) =>
             !comment.responseTo && (
-              <SingleComment
-                refreshFunction={refreshFunction}
-                comment={comment}
-                key={i}
-              />
+              <>
+                <SingleComment
+                  refreshFunction={refreshFunction}
+                  comment={comment}
+                  key={i}
+                />
+                <ReplyComment
+                  refreshFunction={refreshFunction}
+                  commentList={commentList}
+                  parentCommentId={comment._id}
+                />
+              </>
             )
         )}
 
