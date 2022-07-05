@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Tooltip, Icon } from 'antd';
-import { LikeOutlined, DislikeOutlined } from '@ant-design/icons';
+import {
+  LikeOutlined,
+  DislikeOutlined,
+  LikeFilled,
+  DislikeFilled,
+} from '@ant-design/icons';
 import Axios from 'axios';
 
 function LikeDislikes({ video, videoId, userId, commentId }) {
@@ -117,10 +122,11 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
     <div>
       <span key="comment-basic-like">
         <Tooltip title="Like">
-          <LikeOutlined
-            theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
-            onClick={onLike}
-          />
+          {LikeAction === 'liked' ? (
+            <LikeFilled onClick={onLike} style={{ color: '#2F9D27' }} />
+          ) : (
+            <LikeOutlined onClick={onLike} />
+          )}
         </Tooltip>
         <span
           style={{ paddingLeft: '7px', cursor: 'auto', marginRight: '10px' }}
@@ -130,10 +136,11 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
       </span>
       <span key="comment-basic-dislike">
         <Tooltip title="Dislike">
-          <DislikeOutlined
-            theme={DislikeAction === 'disliked' ? 'filled' : 'outlined'}
-            onClick={onDislike}
-          />
+          {DislikeAction === 'disliked' ? (
+            <DislikeFilled onClick={onDislike} style={{ color: '#2F9D27' }} />
+          ) : (
+            <DislikeOutlined onClick={onDislike} />
+          )}
         </Tooltip>
         <span style={{ paddingLeft: '7px', cursor: 'auto' }}>{Dislikes}</span>
       </span>

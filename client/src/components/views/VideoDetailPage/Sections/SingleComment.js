@@ -20,7 +20,11 @@ function SingleComment({ comment, refreshFunction }) {
       userId={localStorage.getItem('userId')}
       commentId={comment._id}
     />,
-    <span onClick={onClickReplyOpen} key="comment-basic-reply-to">
+    <span
+      onClick={onClickReplyOpen}
+      key="comment-basic-reply-to"
+      style={{ marginLeft: '10px' }}
+    >
       Reply to
     </span>,
   ];
