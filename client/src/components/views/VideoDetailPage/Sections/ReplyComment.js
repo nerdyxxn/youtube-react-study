@@ -43,7 +43,15 @@ function ReplyComment({ commentList, refreshFunction, parentCommentId }) {
     <div>
       {ChildCommentNumber > 0 && (
         <p
-          style={{ fontSize: '14px', margin: 0, color: 'gray' }}
+          style={{
+            fontSize: '14px',
+            margin: 0,
+            color: 'gray',
+            paddingLeft: '45px',
+            paddingBottom: '16px',
+            color: '#5DA4F8',
+            cursor: 'pointer',
+          }}
           onClick={onHandleChange}
         >
           View {ChildCommentNumber} more comment(s)

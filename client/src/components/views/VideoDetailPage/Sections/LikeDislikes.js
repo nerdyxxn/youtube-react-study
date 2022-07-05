@@ -123,7 +123,7 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
       <span key="comment-basic-like">
         <Tooltip title="Like">
           {LikeAction === 'liked' ? (
-            <LikeFilled onClick={onLike} style={{ color: '#2F9D27' }} />
+            <LikeFilled onClick={onLike} style={{ color: '#FF0000' }} />
           ) : (
             <LikeOutlined onClick={onLike} />
           )}
@@ -137,7 +137,7 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
       <span key="comment-basic-dislike">
         <Tooltip title="Dislike">
           {DislikeAction === 'disliked' ? (
-            <DislikeFilled onClick={onDislike} style={{ color: '#2F9D27' }} />
+            <DislikeFilled onClick={onDislike} style={{ color: '#FF0000' }} />
           ) : (
             <DislikeOutlined onClick={onDislike} />
           )}
