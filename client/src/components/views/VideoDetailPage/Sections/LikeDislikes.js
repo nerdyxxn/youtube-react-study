@@ -21,7 +21,7 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
 
   useEffect(() => {
     // Like 정보 가져오기
-    Axios.post('api/like/getLikes', variable).then((response) => {
+    Axios.post('/api/like/getLikes', variable).then((response) => {
       if (response.data.success) {
         // Like 숫자
         setLikes(response.data.likes.length);
@@ -37,7 +37,7 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
     });
 
     // Dislike 정보 가져오기
-    Axios.post('api/like/getDislikes', variable).then((response) => {
+    Axios.post('/api/like/getDislikes', variable).then((response) => {
       if (response.data.success) {
         // Dislike 숫자
         setDislikes(response.data.dislikes.length);
@@ -53,12 +53,73 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
     });
   }, []);
 
+  const onLike = () => {
+    // Like 버튼이 클릭되어 있지 않은 경우 : 좋아요 + 1
+    if (LikeAction === null) {
+      Axios.post('/api/like/upLike', variable).then((response) => {
+        if (response.data.success) {
+          setLikes(Likes + 1);
+          setLikeAction('liked');
+
+          // 이미 Dislike 버튼이 클릭되어 있는 경우
+          if (DislikeAction !== null) {
+            setDislikeAction(null);
+            setDislikes(Dislikes - 1);
+          }
+        } else {
+          alert('좋아요 실패!');
+        }
+      });
+    } else {
+      // Like 버튼이 클릭되어 있는 경우 : 좋아요 - 1
+      Axios.post('/api/like/unLike', variable).then((response) => {
+        if (response.data.success) {
+          setLikes(Likes - 1);
+          setLikeAction(null);
+        } else {
+          alert('좋아요 취소 실패!');
+        }
+      });
+    }
+  };
+
+  const onDislike = () => {
+    // Dislike 버튼이 클릭되어 있지 않은 경우 : 싫어요 + 1
+    if (DislikeAction === null) {
+      Axios.post('/api/like/upDislike', variable).then((response) => {
+        if (response.data.success) {
+          setDislikes(Dislikes + 1);
+          setDislikeAction('disliked');
+
+          // 이미 Like 버튼이 클릭되어 있는 경우
+          if (LikeAction !== null) {
+            setLikeAction(null);
+            setLikes(Likes - 1);
+          }
+        } else {
+          alert('싫어요 실패!');
+        }
+      });
+    } else {
+      // Dislike 버튼이 클릭되어 있는 경우 : 싫어요 - 1
+      Axios.post('/api/like/unDislike', variable).then((response) => {
+        if (response.data.success) {
+          setDislikes(Dislikes - 1);
+          setDislikeAction(null);
+        } else {
+          alert('싫어요 취소 실패!');
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <span key="comment-basic-like">
         <Tooltip title="Like">
           <LikeOutlined
             theme={LikeAction === 'liked' ? 'filled' : 'outlined'}
+            onClick={onLike}
           />
         </Tooltip>
         <span
@@ -71,6 +132,7 @@ function LikeDislikes({ video, videoId, userId, commentId }) {
         <Tooltip title="Dislike">
           <DislikeOutlined
             theme={DislikeAction === 'disliked' ? 'filled' : 'outlined'}
+            onClick={onDislike}
           />
         </Tooltip>
         <span style={{ paddingLeft: '7px', cursor: 'auto' }}>{Dislikes}</span>
