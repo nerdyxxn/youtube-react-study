@@ -54,7 +54,7 @@ function ReplyComment({ commentList, refreshFunction, parentCommentId }) {
           }}
           onClick={onHandleChange}
         >
-          View {ChildCommentNumber} more comment(s)
+          답글 {ChildCommentNumber}개
         </p>
       )}
       {OpenReplyComments && renderReplyComment()}

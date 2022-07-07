@@ -5,6 +5,7 @@ import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { UploadOutlined } from '@ant-design/icons';
 
 function RightMenu(props) {
   const user = useSelector((state) => state.user);
@@ -35,7 +36,9 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="upload">
-          <a href="/video/upload">Video</a>
+          <a href="/video/upload" style={{ padding: '6px 15px' }}>
+            <UploadOutlined style={{ fontSize: '24px', margin: 0 }} />
+          </a>
         </Menu.Item>
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>

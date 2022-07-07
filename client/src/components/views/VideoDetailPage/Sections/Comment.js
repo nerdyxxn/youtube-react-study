@@ -67,13 +67,27 @@ function Comment({ commentList, refreshFunction }) {
       {/* Root Comment Form */}
       <form style={{ display: 'flex' }} onSubmit={onSubmit}>
         <textarea
-          style={{ width: '100%', borderRadius: '5px' }}
+          style={{
+            width: '100%',
+            resize: 'none',
+            border: '1px solid lightgray',
+          }}
           onChange={handleClick}
           value={CommentValue}
           placeholder="댓글을 작성해주세요"
         />
         <br />
-        <button style={{ width: '20%', height: '52px' }} onClick={onSubmit}>
+        <button
+          style={{
+            width: '20%',
+            height: '52px',
+            color: '#fff',
+            background: '#3678F5',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+          onClick={onSubmit}
+        >
           Submit
         </button>
       </form>

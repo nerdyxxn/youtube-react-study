@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Button, Form, message, Input } from 'antd';
+import { Typography, Button, Form, message, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 const { Title } = Typography;
 const { TextArea } = Input;
+const { Option } = Select;
 
 // 공개 및 비공개 설정 option을 위한 key와 value 생성
 const PrivateOptions = [
@@ -49,18 +50,12 @@ function VideoUploadPage(props) {
     setDescription(value);
   };
 
-  const onPrivateChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setPrivate(value);
+  const onPrivateChange = (value) => {
+    setPrivate(`selected ${value}`);
   };
 
-  const onCategoryChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setCategory(value);
+  const onCategoryChange = (value) => {
+    setCategory(`selected ${value}`);
   };
 
   // onDrop func 생성
@@ -168,25 +163,29 @@ function VideoUploadPage(props) {
         <br />
         <br />
         <label>Description</label>
-        <TextArea onChange={onDescriptionChange} value={Description} />
+        <TextArea
+          style={{ resize: 'none' }}
+          onChange={onDescriptionChange}
+          value={Description}
+        />
         <br />
         <br />
-        <select onChange={onPrivateChange}>
+        <Select defaultValue="Public" onChange={onPrivateChange}>
           {PrivateOptions.map((item, index) => (
-            <option key={index} value={item.value}>
+            <Option key={index} value={item.value}>
               {item.label}
-            </option>
+            </Option>
           ))}
-        </select>
+        </Select>
         <br />
         <br />
-        <select onChange={onCategoryChange}>
+        <Select defaultValue="Music" onChange={onCategoryChange}>
           {CategoryOptions.map((item, index) => (
-            <option key={index} value={item.value}>
+            <Option key={index} value={item.value}>
               {item.label}
-            </option>
+            </Option>
           ))}
-        </select>
+        </Select>
         <br />
         <br />
         <Button type="primary" size="large" onClick={onSubmit}>
